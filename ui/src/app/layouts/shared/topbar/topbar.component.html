@@ -1,0 +1,70 @@
+<!-- Topbar Start -->
+<div class="navbar navbar-expand flex-column flex-md-row navbar-custom">
+    <div class="container-fluid">
+        <div class="row">
+        <!-- LOGO -->
+        <div class="col-lg-4 col-sm-3 col-3 ">
+            <a routerLink="/"  class="navbar-brand mr-0 mr-md-2 logo">
+                <span class="">
+                    <img src="assets/images/logo-new.png" alt="" height="55" />
+                </span>
+               
+            </a>
+            
+
+        </div>
+        <div class="col-lg-4 col-sm-3 col-1">
+
+
+
+        </div>
+        <div class="col-lg-4 col-sm-6 col-8">
+            <ul class="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu float-right mb-0">
+
+
+
+                <li class="dropdown notification-list align-self-center profile-dropdown" ngbDropdown>
+                    <a class="nav-link dropdown-toggle nav-user mr-0" ngbDropdownToggle href="javascript: void(0);"
+                        role="button">
+                        <div class="media user-profile">
+                            <img src="assets/images/users/avatar-2.jpg" alt="user-image"
+                                class="rounded-circle align-self-center" />
+                            <div class="media-body text-left">
+                                <h6 class="pro-user-name ml-2 my-0">
+
+                                    <span>Fazil</span>
+                                    <span class="pro-user-desc text-muted d-block mt-1" >Administrator </span>
+                                </h6>
+                            </div>
+                            <i  class="ml-2 align-self-center fa-chevron-down fal" ></i>
+                        </div>
+                    </a>
+
+
+                    <div class="dropdown-menu profile-dropdown-items dropdown-menu-right" ngbDropdownMenu>
+                        <a routerLink="/my-account" class="dropdown-item notify-item" ngbDropdownItem>
+                            <i class="icon-dual icon-xs mr-2 fa-user fal" ></i>
+                            <span>My Account</span>
+                        </a>
+
+
+                        <div class="dropdown-divider"></div>
+
+
+                        <a href="javascript:void(0);" (click)="logout()" class="dropdown-item notify-item"
+                            ngbDropdownItem>
+                            <i  class="icon-dual icon-xs mr-2 fa-sign-out-alt fal" ></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+
+
+
+
+
+</div>

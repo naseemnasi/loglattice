@@ -1,0 +1,11 @@
+  GNU nano 4.8                       .gitignore                                 
+# Dependency directories
+/api/node_modules/
+/dashboard/node_modules/
+/dashboard/dist/
+
+/ui/.gitignore
+/ui/package-lock.json
+/ui/node_modules/
+
+/api/package-lock.json

@@ -1,0 +1,5 @@
+{
+  "watch": [".env", "package.json", "nodemon.json", "app/"],
+  "ext": "js",
+  "exec": "set NODE_ENV=dev && node app.js"
+}

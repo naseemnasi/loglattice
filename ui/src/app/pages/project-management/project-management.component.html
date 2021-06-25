@@ -1,0 +1,222 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="mt-1">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-12 text-right">
+                            <button class="btn btn-primary mr-2 " (click)="openModal(addModal)">Add Task</button>
+                            <button class="btn btn-primary " (click)="submitMain()"
+                                style="background-color: #417cf1; border: 1px solid rgb(52, 152, 219);"
+                                id="btn-new-event">Submit </button>
+                        </div>
+                    </div>
+                </div> <!-- end card body-->
+            </div> <!-- end card -->
+        </div>
+        <!-- end col-12 -->
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="">
+                <div class="tasks card">
+                    <h5 class="mt-0 task-header font-size-18">Todo</h5>
+                    <div class="task-list-items list-unstyled" id="todo" dndDropzone dndEffectAllowed="move"
+                        (dndDrop)="onDrop($event, todoTasks, 'todo')">
+                        <li class="dndPlaceholder" dndPlaceholderRef></li>
+                        <ng-container *ngFor="let task of todoTasks">
+                            <li [dndDraggable]="task" dndEffectAllowed="move" (dndMoved)="onDragged(task, todoTasks)">
+                                <ng-template [ngTemplateOutlet]="TaskContent" [ngTemplateOutletContext]="{task:task}">
+                                </ng-template>
+                            </li>
+                        </ng-container>
+                    </div>
+                </div>
+                <!-- Progress  -->
+                <div class="tasks card">
+                    <h5 class="mt-0 task-header font-size-18">In Progress </h5>
+                    <div class="task-list-items list-unstyled" id="inprogress" dndDropzone dndEffectAllowed="move"
+                        (dndDrop)="onDrop($event, inprogressTasks, 'inprogress')">
+                        <li class="dndPlaceholder" dndPlaceholderRef></li>
+                        <ng-container *ngFor="let task of inprogressTasks">
+                            <li [dndDraggable]="task" dndEffectAllowed="move"
+                                (dndMoved)="onDragged(task, inprogressTasks)">
+                                <ng-template [ngTemplateOutlet]="TaskContent" [ngTemplateOutletContext]="{task:task}">
+                                </ng-template>
+                            </li>
+                        </ng-container>
+                    </div>
+                </div> <!-- end tasks -->
+                <!-- End progress -->
+                <div class="tasks  card">
+                    <h5 class="mt-0 task-header font-size-18">Done</h5>
+                    <div class="task-list-items list-unstyled" id="done" dndDropzone dndEffectAllowed="move"
+                        (dndDrop)="onDrop($event, doneTasks, 'done')">
+                        <li class="dndPlaceholder" dndPlaceholderRef></li>
+                        <ng-container *ngFor="let task of doneTasks">
+                            <li class="task-medium" [dndDraggable]="task" dndEffectAllowed="move"
+                                (dndMoved)="onDragged(task, doneTasks)">
+                                <ng-template [ngTemplateOutlet]="TaskContent" [ngTemplateOutletContext]="{task:task}">
+                                </ng-template>
+                            </li>
+                        </ng-container>
+                    </div>
+                </div> <!-- end tasks -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Task  -->
+<ng-template #TaskContent let-task='task'>
+    <div class="card  mb-0">
+        <div class="card-body">
+            <div class=" float-right">
+                <a (click)="openModal(editModal)" class="text-muted arrow-none  p-1">
+                    <i class="fal fa-ellipsis-v font-size-14"></i>
+                </a>
+            </div> <!-- end dropdown -->
+            <h6 class="mt-0 mb-2 font-size-16">
+                <a href="javascript: void(0);" class="text-body" style="color: #ff427c !important;text-transform: capitalize;">{{ task.project   }}</a>
+            </h6>
+            <h6 class="mt-0 mb-1 font-size-14">
+                <a href="javascript: void(0);" class="text-body">{{ task.taskName}}</a>
+            </h6>
+            <p class="font-size-12 mb-1 ">{{ task.taskDescription}}</p>
+            <p class="mb-0 mt-2">
+                <span style="text-transform: capitalize;" class="badge " [ngClass]="{
+                'badge-soft-success': task.priority === 'low',
+                'badge-soft-warning': task.priority === 'medium',
+                'badge-soft-danger': task.priority === 'high',
+                'badge-soft-info': task.priority === 'normal'
+            }">{{ task.priority }}</span>
+                <span class="text-nowrap align-middle font-size-13 ml-2">
+                    <i class="fal fa-clock text-muted mr-1"></i>
+                    <ng-container *ngIf="task.status ==='inprogress'">
+                        <countdown #cd [config]="{leftTime: task.timeLeft}" (event)="handleEvent($event)"></countdown>
+                    </ng-container>
+                    <ng-container *ngIf="task.status !=='inprogress'">
+                        <countdown #cd [config]="{leftTime: task.timeLeft,demand:true}" (event)="handleEvent($event)">
+                        </countdown>
+                    </ng-container>
+                    <!-- <countdown #cd [config]="{leftTime: task.timeLeft,demand: true}" (event)="handleEvent($event)">
+                    </countdown> -->
+                </span>
+                <span class="float-right text-nowrap  font-size-13">
+                    <i class="fal  fa-calendar-alt text-muted mr-1"></i>{{ task.createdAt | date: 'dd/MM/yyyy' }}
+                </span>
+            </p>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #addModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Add Task</h5>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true"><i
+                class="fal fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="addTaskForm">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <select class="form-control custom-select" formControlName="project">
+                            <option selected  >Select Project </option>
+                            <option value="xpensepro">Xpense.Pro</option>
+                            <option value="pan corp">Pan Corp</option>
+                            <Option value="codelattice">Codelattice</Option>
+                            <Option value="experience travel">Experience travel</Option>
+                            <Option value="envitic">Envitic</Option>
+                            <Option value="urvitals">Urvitals</Option>
+                            <Option value="collate">Collate</Option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <input type="text" placeholder="Task" class="form-control" formControlName="task" />
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <input placeholder="Time" type="text" class="form-control" formControlName="time" />
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <select class="form-control custom-select" formControlName="priority">
+                            <option selected>Select Priority </option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <Option value="high">High</Option>
+                            <option value="normal">Normal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <textarea type="text" placeholder="Description" class="form-control" rows="4"
+                            formControlName="description"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="addTaskSubmission()">Submit</button>
+            </div>
+        </form>
+    </div>
+
+</ng-template>
+
+<ng-template #editModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Edit Task</h5>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-hidden="true"><i
+                class="fal fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+        <form action="#">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <select class="form-control custom-select">
+                            <option selected>Select Project </option>
+                            <option>Xpense.Pro</option>
+                            <option value="">Pan Corp</option>
+                            <Option>Codelattice</Option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <input type="text" placeholder="Task" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <input placeholder="Time" type="text" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <select class="form-control custom-select">
+                            <option selected>Select Priority </option>
+                            <option>Low</option>
+                            <option value="">Medium</option>
+                            <Option>High</Option>
+                            <option value="">Normal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <textarea type="text" placeholder="Description" class="form-control" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Submit</button>
+    </div>
+</ng-template>

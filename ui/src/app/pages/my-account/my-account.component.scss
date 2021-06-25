@@ -1,0 +1,71 @@
+.card {
+    margin-bottom: 1.875rem;
+    background-color: #fff;
+    transition: all .5s ease-in-out;
+    position: relative;
+    border: 0px solid transparent;
+    border-radius: 1.75rem;
+ 
+    box-shadow: 0 0 20px rgb(8 21 66 / 5%);
+    height: calc(100% - 30px);
+}
+.photo-content {
+    position: relative;
+}
+.profile-info {
+    display: flex;
+}
+
+.profile-info {
+    padding: 15px 20px;
+}
+.profile .profile-photo {
+    max-width: 100px;
+    position: relative;
+    z-index: 1;
+    margin-top: -40px;
+    margin-right: 10px;
+}
+.rounded-circle {
+    border-radius: 50% !important;
+    border: 6px solid #fff;
+}
+.profile-info .profile-details {
+    display: flex;
+    width: 100%;
+}
+.pt-2 {
+    padding-top: 0.5rem !important;
+}
+
+.px-3 {
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
+}
+.profile-info h4.text-primary, .profile-info .text-primary.h4 {
+    color: var(--primary) !important;
+    font-weight: 400;
+}
+.profile-info p {
+    color: #828690;
+}.pt-2 {
+    padding-top: 0.5rem !important;
+}
+
+.px-2 {
+    padding-right: 0.5rem !important;
+    padding-left: 0.5rem !important;
+}
+.profile-info h4, .profile-info .h4 {
+    color: #464a53 !important;
+    font-weight: 400;
+}
+.rounded {
+    border-radius: 1.75rem !important;
+}
+.pb-0 {
+    padding-bottom: 0 !important;
+}
+.pt-3 {
+    padding-top: 1rem !important;
+}

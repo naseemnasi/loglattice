@@ -1,0 +1,43 @@
+//
+// datatable.scss
+//
+
+.datatables {
+  thead {
+    tr {
+      .sort {
+        position: relative;
+        &:before {
+          content: "\f0de";
+          position: absolute;
+          right: 0;
+          top: 19px;
+          font: normal normal 900 16px/1 "Font Awesome 5 Pro";
+          opacity: 0.3;
+          cursor: pointer;
+        }
+        &:after {
+          content: "\f0dd";
+          position: absolute;
+          right: 0;
+          top: 18px;
+          opacity: 0.3;
+          font: normal normal 900 16px/1 "Font Awesome 5 Pro";
+          cursor: pointer;
+        }
+      }
+
+      .asc {
+        &:before {
+          opacity: 1;
+        }
+      }
+
+      .desc {
+        &:after {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

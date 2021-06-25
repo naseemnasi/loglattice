@@ -1,0 +1,14 @@
+{
+  "appPort": 3000,
+  "MongoUrl": "mongodb://localhost/loglattice",
+  "success": {
+    "message": "Operation Successfull",
+    "status": "success",
+    "data": {}
+  },
+  "error": {
+    "message": "Operation Failed",
+    "status": "failed",
+    "data": {}
+  }
+}
